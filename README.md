@@ -1,5 +1,5 @@
 finance_scraper
 ===============
 
-You will need to provide an ms excel file of ticker symbols.
+Run with DEBUG=app
 -----------------------------------
