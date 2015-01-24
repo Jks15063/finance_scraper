@@ -1,11 +1,8 @@
 var util          = require('util')
 var debug         = require('debug')('app')
-var StringDecoder = require('string_decoder').StringDecoder;
-var decoder       = new StringDecoder('utf8');
 var async         = require('async')
 var MongoClient   = require('mongodb').MongoClient
 var $             = require('cheerio')
-var request       = require('request')
 var bhttp         = require("bhttp");
 var xlsx          = require('node-xlsx')
 var moment        = require('moment')
