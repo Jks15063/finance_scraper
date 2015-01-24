@@ -96,51 +96,6 @@ MongoClient.connect(url, function(err, db) {
                     })
                 }
             })
-
-            //request({
-               //uri: 'http://finance.yahoo.com/q/ks?s=' + stockName + '+Key+Statistics'
-            //}, function(error, response, body) {
-               //if(error) {
-                  //return callback(error)
-               //} else {
-                  //$              = $.load(body);
-                  //var newEntry   = {}
-                  //newEntry.date  = moment().format("YYYY-MM-DD")
-                  //newEntry.stock = stockName
-                  //newEntry.price = $('.time_rtq_ticker').text()
-                  //var titlesObj  = $('.yfnc_tablehead1')
-                  //var valuesObj  = $('.yfnc_tabledata1')
-                  //var titles     = []
-                  //var values     = []
-
-                  //titlesObj.each(function(i, elem) {
-                     //if(elem.children && elem.children[0].data) {
-                        //titles.push(elem.children[0].data)
-                     //}
-                  //})
-                  //valuesObj.each(function(i, elem) {
-                     //if(elem.children) {
-                        //if(elem.children[0].data) {
-                           //values.push(elem.children[0].data)
-                        //} else {
-                           //values.push(elem.children[0].children[0].data)
-                        //}
-                     //}
-                  //})
-                  //var combined = Array.zip(titles, values, function(title, value) {
-                     //newEntry[title] = value
-                     //return
-                  //})
-                  //collection.insert(newEntry, function(err, item) {
-                     //if(err) {
-                        //debug(err)
-                        //return callback(err)
-                     //} else {
-                        //return callback()
-                     //}
-                  //})
-               //}
-            //})
          } else {
             return callback()
          }
