@@ -1,11 +1,11 @@
-var util        = require('util')
-var debug       = require('debug')('app')
-var async       = require('async')
-var MongoClient = require('mongodb').MongoClient
-var $           = require('cheerio')
-var request     = require('request')
-var xlsx        = require('node-xlsx')
-var moment      = require('moment')
+var util          = require('util')
+var debug         = require('debug')('app')
+var async         = require('async')
+var MongoClient   = require('mongodb').MongoClient
+var $             = require('cheerio')
+var bhttp         = require("bhttp");
+var xlsx          = require('node-xlsx')
+var moment        = require('moment')
 
 Array.prototype.mergeAll = function() {
    var results = []
@@ -46,7 +46,7 @@ MongoClient.connect(url, function(err, db) {
    if(err) {
       debug(err)
    } else {
-      var collection = db.collection('bank_data_2015');
+      var collection    = db.collection('bank_data_2015');
       var missingStocks = []
 
       async.eachLimit(stockList, 20, function(stockName, callback) {
@@ -54,49 +54,47 @@ MongoClient.connect(url, function(err, db) {
             debug('Stock: ' + stockName)
             debug('http://finance.yahoo.com/q/ks?s=' + stockName + '+Key+Statistics')
 
-            request({
-               uri: 'http://finance.yahoo.com/q/ks?s=' + stockName + '+Key+Statistics'
-            }, function(error, response, body) {
-               if(error) {
-                  return callback(error)
-               } else {
-                  $              = $.load(body);
-                  var newEntry   = {}
-                  newEntry.date  = moment().format("YYYY-MM-DD")
-                  newEntry.stock = stockName
-                  newEntry.price = $('.time_rtq_ticker').text()
-                  var titlesObj  = $('.yfnc_tablehead1')
-                  var valuesObj  = $('.yfnc_tabledata1')
-                  var titles     = []
-                  var values     = []
+            bhttp.get('http://finance.yahoo.com/q/ks?s=' + stockName + '+Key+Statistics', { stream: false }, function(err, res) {
+                if(err) {
+                  return callback(err)
+                } else {
+                    $              = $.load(res.body.toString());
+                    var newEntry   = {}
+                    newEntry.date  = moment().format("YYYY-MM-DD")
+                    newEntry.stock = stockName
+                    newEntry.price = $('.time_rtq_ticker').text()
+                    var titlesObj  = $('.yfnc_tablehead1')
+                    var valuesObj  = $('.yfnc_tabledata1')
+                    var titles     = []
+                    var values     = []
 
-                  titlesObj.each(function(i, elem) {
-                     if(elem.children && elem.children[0].data) {
-                        titles.push(elem.children[0].data)
-                     }
-                  })
-                  valuesObj.each(function(i, elem) {
-                     if(elem.children) {
-                        if(elem.children[0].data) {
-                           values.push(elem.children[0].data)
-                        } else {
-                           values.push(elem.children[0].children[0].data)
+                    titlesObj.each(function(i, elem) {
+                        if(elem.children && elem.children[0].data) {
+                            titles.push(elem.children[0].data)
                         }
-                     }
-                  })
-                  var combined = Array.zip(titles, values, function(title, value) {
-                     newEntry[title] = value
-                     return
-                  })
-                  collection.insert(newEntry, function(err, item) {
-                     if(err) {
-                        debug(err)
-                        return callback(err)
-                     } else {
-                        return callback()
-                     }
-                  })
-               }
+                    })
+                    valuesObj.each(function(i, elem) {
+                        if(elem.children) {
+                            if(elem.children[0].data) {
+                                values.push(elem.children[0].data)
+                            } else {
+                                values.push(elem.children[0].children[0].data)
+                            }
+                        }
+                    })
+                    var combined = Array.zip(titles, values, function(title, value) {
+                        newEntry[title] = value
+                        return
+                    })
+                    collection.insert(newEntry, function(err, item) {
+                        if(err) {
+                            debug(err)
+                            return callback(err)
+                        } else {
+                            return callback()
+                        }
+                    })
+                }
             })
          } else {
             return callback()

@@ -5,12 +5,12 @@
   "main": "app.js",
   "dependencies": {
     "async": "^0.9.0",
+    "bhttp": "^1.0.2",
     "cheerio": "^0.17.0",
     "debug": "^2.1.0",
     "moment": "^2.8.3",
     "mongodb": "^1.4.19",
-    "node-xlsx": "^0.5.1",
-    "request": "^2.51.0"
+    "node-xlsx": "^0.5.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
