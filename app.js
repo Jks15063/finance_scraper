@@ -48,6 +48,7 @@ MongoClient.connect(url, function(err, db) {
    } else {
       var collection = db.collection('bank_data_2015');
       var missingStocks = []
+
       async.eachLimit(stockList, 20, function(stockName, callback) {
          if(stockName && stockName.trim().toLowerCase() !== 'ticker') {
             debug('Stock: ' + stockName)
@@ -109,5 +110,6 @@ MongoClient.connect(url, function(err, db) {
          }
          db.close()
       })
+
    }
 })
