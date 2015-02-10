@@ -7,6 +7,8 @@ var bhttp         = require("bhttp");
 var xlsx          = require('node-xlsx')
 var moment        = require('moment')
 
+var changes = "WUT"
+
 Array.prototype.mergeAll = function() {
    var results = []
    this.
