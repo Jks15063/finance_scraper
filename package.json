@@ -8,6 +8,7 @@
     "bhttp": "^1.0.2",
     "cheerio": "^0.17.0",
     "debug": "^2.1.0",
+    "github": "^0.2.3",
     "moment": "^2.8.3",
     "mongodb": "^1.4.19",
     "node-xlsx": "^0.5.1"
@@ -16,5 +17,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jake",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "pre-commit": "^1.0.4"
+  }
 }
