@@ -14,18 +14,12 @@
     "node-xlsx": "^0.5.1"
   },
   "scripts": {
-    /*"test": "echo \"Error: no test specified\" && exit 1"*/
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
       "type": "git",
       "url": "https://github.com/Jks15063/finance_scraper.git"
   },
-  "pre-commit": [
-      /*"foo"*/
-  ],
   "author": "jake",
-  "license": "ISC",
-  "devDependencies": {
-    "pre-commit": "^1.0.4"
-  }
+  "license": "ISC"
 }
