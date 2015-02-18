@@ -1,4 +1,3 @@
-//Its a scraper!
 var util          = require('util')
 var debug         = require('debug')('app')
 var async         = require('async')
@@ -7,8 +6,6 @@ var $             = require('cheerio')
 var bhttp         = require("bhttp");
 var xlsx          = require('node-xlsx')
 var moment        = require('moment')
-
-var changes = "WUT"
 
 Array.prototype.mergeAll = function() {
    var results = []
